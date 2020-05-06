@@ -1,8 +1,6 @@
 package noteWeb.note;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,19 +8,26 @@ import java.util.UUID;
  * class create one note
  */
 @Entity
+@Table(name = "note")
 public class Note {
 
     @Id
     private UUID id;
+    @Column
     private String title;
+    @Column
     private String text;
 
-    @ManyToOne
-    private Notebook notebook;
-
+    @Column(name = "last_modified_on")
     private Date lastModifiedOn;
 
+
+    @ManyToOne
+    @JoinColumn(name="notebook_id")
+    private Notebook notebook;
+
     protected Note() {
+        //its better to generate id inside db, since db knows which of ids has already been generated
         this.id = UUID.randomUUID();
         this.lastModifiedOn = new Date();
     }

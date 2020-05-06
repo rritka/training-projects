@@ -1,5 +1,6 @@
 package noteWeb.note;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -8,11 +9,17 @@ import java.util.UUID;
  * class created Notebooks of Notes
  */
 
+@Entity
+//named 'note_book' to avoid misunderstanding with field notebook in Notebook.java
+@Table(name = "note_book")
 public class Notebook {
 
+    @Id
     private UUID id;
+    @Column
     private String name;
 
+    @OneToMany(mappedBy="notebook")
     private List<Note> notes;
 
 
